@@ -2,14 +2,20 @@ package Connect4;
 
 import javax.swing.JOptionPane;
 
+/**
+ * @author Kirtan/Rushi Check for win as well as print message when match won
+ *         and replay
+ */
 public class ConnectFour {
 
 	private int[][] board;
 	private int thisPlayer;
 	private boolean declareWinner = false;
-	private static String mode;
 	public static String[] modes = { "Two Players", "Single Player" };
 
+	/**
+	 * Creates the board
+	 */
 	public ConnectFour() {
 		// create the board
 		board = new int[7][6];
@@ -21,6 +27,13 @@ public class ConnectFour {
 		thisPlayer = 2;
 	}
 
+	/**
+	 * Continue to drop a colour into a column until it returns -1. Initializes
+	 * the player
+	 * 
+	 * @param COL
+	 * @return -1 or ROW
+	 */
 	int drop(int COL) {
 
 		for (int ROW = 0; ROW < 6; ROW++) {
@@ -32,10 +45,14 @@ public class ConnectFour {
 				return ROW;
 			}
 		}
-		// drop a color until it returns -1.
 		return -1;
 	}
 
+	/**
+	 * Check for win horizontal, vertical, diagonal
+	 * 
+	 * @return declareWinner
+	 */
 	public boolean hasWon() {
 
 		// check for a horizontal win " - "
@@ -81,8 +98,12 @@ public class ConnectFour {
 		return declareWinner;
 	}
 
+	/**
+	 * Message dialog to that prints if a player has won. Also prints a dialog,
+	 * if the player would like to play again
+	 */
 	public void printMessage() {
-
+		// message for winning
 		if (declareWinner = true) {
 			JOptionPane.showMessageDialog(null, "Player " + thisPlayer + " won!!");
 			int reply = JOptionPane.showConfirmDialog(null, "New Game?", "New Game", JOptionPane.YES_NO_OPTION);

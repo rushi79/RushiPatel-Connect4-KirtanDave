@@ -4,16 +4,23 @@ import javax.swing.*;
 import javax.swing.border.*;
 
 import java.awt.*;
-import java.util.Random;
 
+/**
+ * @author Kirtan/Rushi 
+ * Consists of a graphical interface in which a user can play the game.
+ */
 public class GUI {
 	private JFrame frame;
 	private JLabel[][] board;
 	private static int thisPlayer;
 	public static String[] modes = { "Two Players", "Single Player" };
 	public static String mode;
-	private static boolean singlePlayer;
 
+	/**
+	 *Allows the user to choose a mode (Single Player or Multiplayer) 
+	 * @param args
+	 */
+	@SuppressWarnings("unused")
 	public static void main(String[] args) {
 		mode = (String) JOptionPane.showInputDialog(null, "Select Game Mode", "Game Mode", JOptionPane.PLAIN_MESSAGE,
 				null, modes, "--------");
@@ -21,20 +28,18 @@ public class GUI {
 		if (mode == null) {
 			System.exit(1);
 		} else if (mode == modes[0]) {
-			singlePlayer = false;
 		} else {
-			singlePlayer = true;
 		}
 		ConnectFour logic = new ConnectFour();
 		GUI gui = new GUI();
 		ConnectFourListener listener = new ConnectFourListener(logic, gui, mode);
 	}
 
+	/**
+	 * Sets a frame in which the game will run on.
+	 * Initializes the board with a grid. 
+	 */
 	public GUI() {
-		onBoard();
-	}
-
-	public void onBoard() {
 
 		frame = new JFrame("Connect Four");
 		JPanel panel = (JPanel) frame.getContentPane();
@@ -57,6 +62,10 @@ public class GUI {
 		thisPlayer = 1;
 	}
 
+	/**
+	 * Add a mouse listener for every column on the grid
+	 * @param listener
+	 */
 	public void MouseListener(ConnectFourListener listener) {
 		for (int ROW = 0; ROW < 6; ROW++) {
 			for (int COL = 0; COL < 7; COL++) {
@@ -65,6 +74,11 @@ public class GUI {
 		}
 	}
 
+	/**
+	 * Check for column space, if found then it will allow the user to drop a colour.
+	 * @param label
+	 * @return returnColumn
+	 */
 	public int columnSpace(JLabel label) {
 		int returnColumn = -1;
 		for (int ROW = 0; ROW < 6; ROW++) {
@@ -77,12 +91,18 @@ public class GUI {
 		return returnColumn;
 	}
 
+	/**
+	 * updates a colour according to player.
+	 * player 1 : red
+	 * player 2: yellow
+	 * @param COL, ROW
+	 */
 	public void updateColour(int COL, int ROW) {
 		if (thisPlayer == 1) {
 			board[COL][ROW].setOpaque(true);
 			board[COL][ROW].setBackground(Color.red);
 
-		} else {
+		} else if (thisPlayer == 2) {
 			board[COL][ROW].setOpaque(true);
 			board[COL][ROW].setBackground(Color.yellow);
 		}

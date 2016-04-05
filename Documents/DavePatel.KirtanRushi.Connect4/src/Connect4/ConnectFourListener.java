@@ -1,11 +1,12 @@
 package Connect4;
 
 import javax.swing.*;
-
-import java.awt.Color;
 import java.awt.event.*;
-import java.util.Random;
 
+/**
+ * @author Kirtan/Rushi
+ *
+ */
 public class ConnectFourListener implements MouseListener {
 	AI gameAI;
 	GUI gui;
@@ -13,9 +14,16 @@ public class ConnectFourListener implements MouseListener {
 	private int turnCount = 0;
 	private String mode;
 	public static String[] modes = { "Two Players", "Single Player" };
+	@SuppressWarnings("unused")
 	private static boolean singlePlayer;
-	private int move;
 
+	/**
+	 * Create objects and initialize variables
+	 * 
+	 * @param game
+	 * @param gui
+	 * @param mode
+	 */
 	public ConnectFourListener(ConnectFour game, GUI gui, String mode) {
 		this.game = game;
 		this.gui = gui;
@@ -23,9 +31,13 @@ public class ConnectFourListener implements MouseListener {
 		gui.MouseListener(this);
 	}
 
+	/**
+	 * According to the mode of the current state(single player or multiplayer), it will display 
+	 * a interface according to the players choice of mode.
+	 * Implement Draw/Win/loss
+	 */
 	public void mouseClicked(MouseEvent event) {
-		//Multiplayer
-		Random rand = new Random();
+		// Multiplayer
 		JLabel label = (JLabel) event.getComponent();
 		int COL = gui.columnSpace(label);
 		int ROW = game.drop(COL);
@@ -39,7 +51,8 @@ public class ConnectFourListener implements MouseListener {
 		if (game.hasWon() == true) {
 			game.printMessage();
 		}
-		//Single Player
+
+		// Single Player
 		if (mode == modes[0]) {
 			singlePlayer = false;
 		} else {
@@ -49,19 +62,21 @@ public class ConnectFourListener implements MouseListener {
 		int rowComp;
 		int colComp;
 		if (mode == modes[1]) {
-			gameAI.ChooseMove();
-			colComp = gameAI.MakeMove();
+			gameAI.makeMove();
+			colComp = gameAI.chooseMove();
 			rowComp = game.drop(colComp);
 			if (ROW != -1) {
 				gui.updateColour(colComp, rowComp);
 				turnCount = turnCount + 1;
 			} else if (game.hasWon() == true) {
 				game.printMessage();
+
 			} else {
 				JOptionPane.showMessageDialog(null, "Column is FULL!");
 
 			}
 		}
+		//Draw Game
 		if (turnCount == 42) {
 			JOptionPane.showMessageDialog(null, "Draw Game");
 			int reply2 = JOptionPane.showConfirmDialog(null, "New Game?", "New Game", JOptionPane.YES_NO_OPTION);
@@ -74,18 +89,30 @@ public class ConnectFourListener implements MouseListener {
 
 	}
 
+	/**
+	 * Checks if mouse has entered an action
+	 */
 	public void mouseEntered(MouseEvent arg0) {
 
 	}
 
+	/**
+	 * Checks if mouse has stopped entering an action
+	 */
 	public void mouseExited(MouseEvent e) {
 
 	}
 
+	/**
+	 * Checks when mouse clicked
+	 */
 	public void mousePressed(MouseEvent e) {
 
 	}
 
+	/**
+	 * Checks when mouse click has been let go
+	 */
 	public void mouseReleased(MouseEvent e) {
 
 	}
