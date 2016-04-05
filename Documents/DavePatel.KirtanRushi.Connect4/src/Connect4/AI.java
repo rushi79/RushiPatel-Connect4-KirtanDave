@@ -18,7 +18,7 @@ public class AI {
 	}
 
 	/**
-	 * Sets move done by AI
+	 * Sets a random move by AI
 	 */
 	public void makeMove() {
 		move();
